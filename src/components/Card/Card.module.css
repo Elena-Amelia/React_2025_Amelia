@@ -1,0 +1,26 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid gray;
+}
+
+.cardImg {
+  width: 200px;
+}
+
+.cardList {
+  list-style-type: none;
+  text-align: left;
+}
+
+.cardLi {
+}
+.cardTitle {
+  padding-left: 40px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
