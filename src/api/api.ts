@@ -1,14 +1,16 @@
 import { ICharacter } from '../types/types';
 
-const baseUrl = 'https://rickandmortyapi.com/api/character/?';
+const baseUrl = 'https://rickandmortyapi.com/api/character';
 
 export async function fetchChars(query?: string) {
   let url = '';
   const page = 1;
   if (query) {
-    url = baseUrl + `name=${query}`;
+    url = baseUrl + `/?name=${query}`;
+  } else if (query === '') {
+    url = baseUrl;
   } else {
-    url = baseUrl + `page=${page}`;
+    url = baseUrl + `/?page=${page}`;
   }
 
   try {

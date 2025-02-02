@@ -4,16 +4,15 @@ import Header from '../Header/Header';
 import Card from '../Card/Card';
 import { ICharacter } from '../../types/types';
 import styles from './Content.module.css';
+import { LocalStorageKey } from '../../localStorage/localStorage';
 
 interface ContentProps {
-  query: string | null;
+  query: string;
 }
 
 interface ContentState {
   chars: ICharacter[] | [];
 }
-
-const LocalStorageKey = 'lastQueryFromTask#1';
 
 export default class ContentPage extends Component<ContentProps, ContentState> {
   constructor(props: ContentProps) {

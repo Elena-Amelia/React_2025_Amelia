@@ -1,4 +1,5 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
+import { LocalStorageKey } from '../../localStorage/localStorage';
 
 interface SearchProps {
   onSearch: (query: string) => void;
@@ -28,6 +29,15 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
     this.setState({ value: e.target.value });
   }
 
+  componentDidMount(): void {
+    const localStorageValue = localStorage.getItem(LocalStorageKey);
+    if (localStorageValue) {
+      this.setState({ value: localStorageValue });
+    } else {
+      this.setState({ value: '' });
+    }
+  }
+
   render() {
     return (
       <form className="search__form" onSubmit={this.onSubmit}>
@@ -39,7 +49,7 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
           onChange={this.onChange}
         />
         <button type="submit" className="search__button">
-          Submit
+          Search
         </button>
       </form>
     );
