@@ -5,13 +5,15 @@ import Card from '../Card/Card';
 import { ICharacter } from '../../types/types';
 import styles from './Content.module.css';
 import { LocalStorageKey } from '../../localStorage/localStorage';
+import Loader from '../Loader/Loader';
 
 interface ContentProps {
-  query: string;
+  query?: string;
 }
 
 interface ContentState {
   chars: ICharacter[] | [];
+  isLoading: boolean;
 }
 
 export default class ContentPage extends Component<ContentProps, ContentState> {
@@ -19,19 +21,22 @@ export default class ContentPage extends Component<ContentProps, ContentState> {
     super(props);
     this.state = {
       chars: [],
+      isLoading: false,
     };
     this.onSearch = this.onSearch.bind(this);
   }
 
   onSearch(query: string) {
+    this.setState({ isLoading: true });
+
     localStorage.setItem(LocalStorageKey, query);
 
     fetchChars(query)
       .then((data) => {
         if (data) {
-          this.setState({ chars: data });
+          this.setState({ chars: data, isLoading: false });
         } else {
-          this.setState({ chars: [] });
+          this.setState({ chars: [], isLoading: false });
         }
       })
       .catch((err) => {
@@ -58,19 +63,23 @@ export default class ContentPage extends Component<ContentProps, ContentState> {
   }
 
   render(): ReactNode {
-    const { chars } = this.state;
+    const { chars, isLoading } = this.state;
 
     return (
       <>
         <Header onSearch={this.onSearch}></Header>
         <main>
-          <div className={styles.contentWrapper}>
-            {chars.length ? (
-              chars.map((char) => <Card key={char.id} char={char}></Card>)
-            ) : (
-              <h2>No characters found</h2>
-            )}
-          </div>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className={styles.contentWrapper}>
+              {chars.length ? (
+                chars.map((char) => <Card key={char.id} char={char}></Card>)
+              ) : (
+                <h2>No characters found</h2>
+              )}
+            </div>
+          )}
         </main>
       </>
     );

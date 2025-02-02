@@ -18,8 +18,8 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
     return { hasError: true };
   }
 
-  componentDidCatch() {
-    console.log('Someting went wrong...');
+  componentDidCatch(error: Error) {
+    console.error(`${error.message}`);
   }
 
   onClick = () => {
