@@ -3,9 +3,9 @@ import { fetchChars } from '../../api/api';
 import Header from '../Header/Header';
 import Card from '../Card/Card';
 import { ICharacter } from '../../types/types';
-import styles from './Content.module.css';
 import { LocalStorageKey } from '../../localStorage/localStorage';
 import Loader from '../Loader/Loader';
+import '../../index.css';
 
 interface ContentProps {
   query?: string;
@@ -72,11 +72,11 @@ export default class ContentPage extends Component<ContentProps, ContentState> {
           {isLoading ? (
             <Loader />
           ) : (
-            <div className={styles.contentWrapper}>
+            <div className="flexRow">
               {chars.length ? (
                 chars.map((char) => <Card key={char.id} char={char}></Card>)
               ) : (
-                <h2>No characters found</h2>
+                <h2 className="badResult">No characters found</h2>
               )}
             </div>
           )}

@@ -1,4 +1,5 @@
 import { Component, ReactNode } from 'react';
+import '../../index.css';
 
 interface ErrorProps {
   children: ReactNode;
@@ -29,8 +30,8 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
   render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div>
-          <h2>Someting went wrong...</h2>
+        <div className="errorBlock flexColumn">
+          <h2 className="errorMessage">Someting went wrong...</h2>
           <button onClick={this.onClick}>Reset error</button>
         </div>
       );

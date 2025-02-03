@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import ErrorButton from '../ErrorButton/ErrorButton';
+import '../../index.css';
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -9,10 +10,12 @@ interface HeaderProps {
 export default class Header extends Component<HeaderProps> {
   render() {
     return (
-      <header>
+      <header className="flexColumn header">
         <h1>Rick and Morty</h1>
-        <SearchForm onSearch={this.props.onSearch}></SearchForm>
-        <ErrorButton />
+        <div className="flexRow">
+          <SearchForm onSearch={this.props.onSearch}></SearchForm>
+          <ErrorButton />
+        </div>
       </header>
     );
   }

@@ -1,4 +1,6 @@
 .loader {
+  position: relative;
+  margin: 0 auto;
   width: 100px;
   aspect-ratio: 1;
   display: grid;

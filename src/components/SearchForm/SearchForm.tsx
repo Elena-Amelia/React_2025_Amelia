@@ -1,5 +1,6 @@
 import { ChangeEvent, Component, FormEvent } from 'react';
 import { LocalStorageKey } from '../../localStorage/localStorage';
+import '../../index.css';
 
 interface SearchProps {
   onSearch: (query: string) => void;
@@ -40,16 +41,16 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
 
   render() {
     return (
-      <form className="search__form" onSubmit={this.onSubmit}>
+      <form className="form" onSubmit={this.onSubmit}>
         <input
           type="search"
           placeholder="Search a character..."
-          className="search__input"
+          className="inputSearch"
           value={this.state.value}
           onChange={this.onChange}
         />
-        <button type="submit" className="search__button">
-          Search
+        <button type="submit" className="buttonSearch iconSearch">
+          <span></span>
         </button>
       </form>
     );

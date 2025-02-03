@@ -1,8 +1,7 @@
 import { Component, ReactNode } from 'react';
-import style from './ErrorButton.module.css';
 
 interface ErrorBtnProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 interface ErrorBtnState {
@@ -30,10 +29,6 @@ export default class ErrorButton extends Component<
     if (isError) {
       throw new Error('Something went wrong...');
     }
-    return (
-      <button className={style.button} onClick={this.onClick}>
-        Generate Error
-      </button>
-    );
+    return <button onClick={this.onClick}>Generate Error</button>;
   }
 }
