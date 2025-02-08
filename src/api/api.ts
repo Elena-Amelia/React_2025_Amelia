@@ -1,4 +1,4 @@
-import { ICharacter } from '../types/types';
+import { Character } from '../types/types';
 
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 
@@ -18,7 +18,7 @@ export async function fetchChars(query?: string) {
     const data = await response.json();
 
     if (data?.results) {
-      const chars: ICharacter[] = data.results;
+      const chars: Character[] = data.results;
       return chars;
     }
   } catch (error) {

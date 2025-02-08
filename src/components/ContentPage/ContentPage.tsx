@@ -1,42 +1,64 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { fetchChars } from '../../api/api';
 import Header from '../Header/Header';
 import Card from '../Card/Card';
-import { ICharacter } from '../../types/types';
+import { Character } from '../../types/types';
 import { LocalStorageKey } from '../../localStorage/localStorage';
 import Loader from '../Loader/Loader';
 import '../../index.css';
 
+function getInitValue() {
+  const localStorageValue = localStorage.getItem(LocalStorageKey);
+  let initValue = '';
+
+  if (localStorageValue) {
+    initValue = localStorageValue;
+  }
+  return initValue;
+}
+
 interface ContentProps {
+  chars: Character[] | [];
+  isLoading: boolean;
   query?: string;
 }
 
-interface ContentState {
-  chars: ICharacter[] | [];
-  isLoading: boolean;
-}
+export default function ContentPage(): ReactNode {
+  const initialState: ContentProps = {
+    chars: [],
+    isLoading: false,
+  };
 
-export default class ContentPage extends Component<ContentProps, ContentState> {
-  constructor(props: ContentProps) {
-    super(props);
-    this.state = {
-      chars: [],
-      isLoading: false,
-    };
-    this.onSearch = this.onSearch.bind(this);
-  }
+  const [pageState, setPageState] = useState(initialState);
+  const [query, setQuery] = useState(() => getInitValue());
 
-  onSearch(query: string) {
-    this.setState({ isLoading: true });
+  useEffect(() => {
+    onSearch(query);
+  }, [query]);
+
+  function onSearch(query: string) {
+    setPageState((prevState) => ({
+      ...prevState,
+      isLoading: true,
+    }));
 
     localStorage.setItem(LocalStorageKey, query);
 
     fetchChars(query)
       .then((data) => {
         if (data) {
-          this.setState({ chars: data, isLoading: false });
+          setQuery(query);
+          setPageState((prevState) => ({
+            ...prevState,
+            isLoading: false,
+            chars: data,
+          }));
         } else {
-          this.setState({ chars: [], isLoading: false });
+          setPageState((prevState) => ({
+            ...prevState,
+            isLoading: false,
+            chars: [],
+          }));
         }
       })
       .catch((err) => {
@@ -44,44 +66,24 @@ export default class ContentPage extends Component<ContentProps, ContentState> {
       });
   }
 
-  setInitialState = () => {
-    const localStorageValue = localStorage.getItem(LocalStorageKey);
-
-    if (localStorageValue) {
-      this.onSearch(localStorageValue);
-    } else {
-      fetchChars().then((data) => {
-        if (Array.isArray(data)) {
-          this.setState({ chars: data });
-        }
-      });
-    }
-  };
-
-  componentDidMount(): void {
-    this.setInitialState();
-  }
-
-  render(): ReactNode {
-    const { chars, isLoading } = this.state;
-
-    return (
-      <>
-        <Header onSearch={this.onSearch}></Header>
-        <main>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <div className="flexRow">
-              {chars.length ? (
-                chars.map((char) => <Card key={char.id} char={char}></Card>)
-              ) : (
-                <h2 className="badResult">No characters found</h2>
-              )}
-            </div>
-          )}
-        </main>
-      </>
-    );
-  }
+  return (
+    <>
+      <Header onSearch={onSearch} prevValue={query}></Header>
+      <main>
+        {pageState.isLoading ? (
+          <Loader />
+        ) : (
+          <div className="flexRow">
+            {pageState.chars.length ? (
+              pageState.chars.map((char) => (
+                <Card key={char.id} char={char}></Card>
+              ))
+            ) : (
+              <h2 className="badResult">No characters found</h2>
+            )}
+          </div>
+        )}
+      </main>
+    </>
+  );
 }
