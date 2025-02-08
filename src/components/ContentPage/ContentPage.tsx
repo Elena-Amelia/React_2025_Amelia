@@ -3,24 +3,13 @@ import { fetchChars } from '../../api/api';
 import Header from '../Header/Header';
 import Card from '../Card/Card';
 import { Character } from '../../types/types';
-import { LocalStorageKey } from '../../localStorage/localStorage';
 import Loader from '../Loader/Loader';
 import '../../index.css';
-
-function getInitValue() {
-  const localStorageValue = localStorage.getItem(LocalStorageKey);
-  let initValue = '';
-
-  if (localStorageValue) {
-    initValue = localStorageValue;
-  }
-  return initValue;
-}
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 interface ContentProps {
   chars: Character[] | [];
   isLoading: boolean;
-  query?: string;
 }
 
 export default function ContentPage(): ReactNode {
@@ -30,7 +19,7 @@ export default function ContentPage(): ReactNode {
   };
 
   const [pageState, setPageState] = useState(initialState);
-  const [query, setQuery] = useState(() => getInitValue());
+  const [query, setQuery] = useLocalStorage();
 
   useEffect(() => {
     onSearch(query);
@@ -42,12 +31,9 @@ export default function ContentPage(): ReactNode {
       isLoading: true,
     }));
 
-    localStorage.setItem(LocalStorageKey, query);
-
     fetchChars(query)
       .then((data) => {
         if (data) {
-          setQuery(query);
           setPageState((prevState) => ({
             ...prevState,
             isLoading: false,
@@ -68,7 +54,7 @@ export default function ContentPage(): ReactNode {
 
   return (
     <>
-      <Header onSearch={onSearch} prevValue={query}></Header>
+      <Header onSearch={setQuery} prevValue={query}></Header>
       <main>
         {pageState.isLoading ? (
           <Loader />
