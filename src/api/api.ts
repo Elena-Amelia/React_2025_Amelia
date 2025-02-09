@@ -5,6 +5,7 @@ const baseUrl = 'https://rickandmortyapi.com/api/character';
 export async function fetchChars(query?: string) {
   let url = '';
   const page = 1;
+
   if (query) {
     url = baseUrl + `/?name=${query}`;
   } else if (query === '') {
@@ -20,6 +21,22 @@ export async function fetchChars(query?: string) {
     if (data?.results) {
       const chars: Character[] = data.results;
       return chars;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchOneChar(id: string) {
+  const url = baseUrl + `/${id}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data) {
+      const char: Character = data;
+      return char;
     }
   } catch (error) {
     console.error(error);

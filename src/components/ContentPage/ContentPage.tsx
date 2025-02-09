@@ -1,11 +1,12 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { fetchChars } from '../../api/api';
 import Header from '../Header/Header';
-import Card from '../Card/Card';
 import { Character } from '../../types/types';
 import Loader from '../Loader/Loader';
 import '../../index.css';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import CardList from '../CardList/CardList';
+import { Outlet } from 'react-router';
 
 interface ContentProps {
   chars: Character[] | [];
@@ -59,14 +60,11 @@ export default function ContentPage(): ReactNode {
         {pageState.isLoading ? (
           <Loader />
         ) : (
-          <div className="flexRow">
-            {pageState.chars.length ? (
-              pageState.chars.map((char) => (
-                <Card key={char.id} char={char}></Card>
-              ))
-            ) : (
-              <h2 className="badResult">No characters found</h2>
-            )}
+          <div className="flexRow mainBlock">
+            <CardList chars={pageState.chars} />
+            <div className="details">
+              <Outlet context={pageState.chars} />{' '}
+            </div>
           </div>
         )}
       </main>
