@@ -1,34 +1,15 @@
-import { Component, ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
-interface ErrorBtnProps {
-  children?: ReactNode;
-}
+export default function ErrorButton(): ReactNode {
+  const [isError, setError] = useState(false);
 
-interface ErrorBtnState {
-  isError: boolean;
-}
-
-export default class ErrorButton extends Component<
-  ErrorBtnProps,
-  ErrorBtnState
-> {
-  constructor(props: ErrorBtnProps) {
-    super(props);
-    this.state = {
-      isError: false,
-    };
-    this.onClick = this.onClick.bind(this);
+  function handleClick() {
+    setError(true);
   }
 
-  onClick = () => {
-    this.setState({ isError: true });
-  };
-
-  render(): ReactNode {
-    const { isError } = this.state;
-    if (isError) {
-      throw new Error('Something went wrong...');
-    }
-    return <button onClick={this.onClick}>Generate Error</button>;
+  if (isError) {
+    throw new Error('Something went wrong...');
   }
+
+  return <button onClick={handleClick}>Generate Error</button>;
 }

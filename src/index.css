@@ -34,6 +34,9 @@ h1 {
   color: #8bcf21;
   text-align: center;
 }
+h2 {
+  text-align: center;
+}
 
 button {
   width: 180px;
@@ -74,13 +77,17 @@ button:hover {
 
 .cardWrapper {
   width: 200px;
-  height: 600px;
-  justify-content: flex-start;
+  height: 400px;
   gap: 20px;
+  align-items: center;
   outline: 3px solid #8bcf21;
   border-radius: 5px;
   background-color: rgba(139, 207, 33, 0.5);
   margin: 0 auto 30px;
+}
+.cardWrapper:hover {
+  cursor: pointer;
+  background-color: #8bcf21;
 }
 
 .cardImg {
@@ -105,6 +112,48 @@ button:hover {
   justify-content: center;
 }
 
+.cardBlock {
+  width: 50%;
+}
+
+.mainBlock {
+  position: relative;
+}
+.details {
+  width: 300px;
+  position: sticky;
+  top: 20px;
+  right: 20px;
+}
+
+.detailedImg {
+  width: 300px;
+  border-radius: 5px;
+  background-size: cover;
+}
+
+.detailedCardWrap {
+  width: 300px;
+  gap: 20px;
+  align-items: center;
+  outline: 3px solid #477385;
+  border-radius: 5px;
+  background-color: #e5d29f;
+  padding-bottom: 30px;
+}
+
+.h {
+  color: #3d373c;
+  color: #2f9331;
+  color: #477385;
+  color: #926f44;
+  color: #8bcf21;
+  color: #c19978;
+  color: #83d2e4;
+  color: #e5d29f;
+  color: #e7e0db;
+}
+
 .errorBlock {
   margin: auto;
   align-items: center;
@@ -123,7 +172,6 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
   gap: 20px;
   margin: 1rem auto;
 }

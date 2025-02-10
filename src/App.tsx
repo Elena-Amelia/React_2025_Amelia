@@ -1,11 +1,12 @@
 import './App.css';
-import { Component, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import ContentPage from './components/ContentPage/ContentPage';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
-class App extends Component {
-  render(): ReactNode {
-    return <ContentPage />;
-  }
+export default function App(): ReactNode {
+  return (
+    <ErrorBoundary>
+      <ContentPage />;
+    </ErrorBoundary>
+  );
 }
-
-export default App;
