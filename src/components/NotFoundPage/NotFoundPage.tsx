@@ -7,7 +7,7 @@ export default function NotFoundPage(): ReactNode {
     <div className="errorBlock flexColumn">
       <h2>404</h2>
       <h2>Page not found</h2>
-      <Link to="/React_2025_Amelia/">Go to main page</Link>
+      <Link to="/">Go to main page</Link>
     </div>
   );
 }
